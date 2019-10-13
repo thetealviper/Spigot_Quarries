@@ -72,20 +72,20 @@ public class Quarries extends JavaPlugin implements Listener {
 		QuarryArm.onDisable();
 	}
 
-	@EventHandler
-	public void onChat(AsyncPlayerChatEvent e) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {public void run() {
-			if(e.getMessage().startsWith("give")) {
-				ItemStack item = CustomItems1_14_4.getItem(Integer.parseInt(e.getMessage().replace("give ", "")));
-				e.getPlayer().getInventory().addItem(item);
-			}else if(e.getMessage().equals("test")) {
-				Block b = e.getPlayer().getTargetBlock(null, 100).getRelative(BlockFace.UP);
-				TileEntityMobSpawner spawner = (TileEntityMobSpawner) ((CraftWorld) b.getLocation().getWorld()).getHandle().getTileEntity(new BlockPosition(b.getLocation().getX(), b.getLocation().getY(), b.getLocation().getZ()));
-				NBTTagCompound spawnerTag = spawner.b();
-				Bukkit.broadcastMessage(spawnerTag.toString());
-			}
-		}}, 0);
-	}
+//	@EventHandler
+//	public void onChat(AsyncPlayerChatEvent e) {
+//		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {public void run() {
+//			if(e.getMessage().startsWith("give")) {
+//				ItemStack item = CustomItems1_14_4.getItem(Integer.parseInt(e.getMessage().replace("give ", "")));
+//				e.getPlayer().getInventory().addItem(item);
+//			}else if(e.getMessage().equals("test")) {
+//				Block b = e.getPlayer().getTargetBlock(null, 100).getRelative(BlockFace.UP);
+//				TileEntityMobSpawner spawner = (TileEntityMobSpawner) ((CraftWorld) b.getLocation().getWorld()).getHandle().getTileEntity(new BlockPosition(b.getLocation().getX(), b.getLocation().getY(), b.getLocation().getZ()));
+//				NBTTagCompound spawnerTag = spawner.b();
+//				Bukkit.broadcastMessage(spawnerTag.toString());
+//			}
+//		}}, 0);
+//	}
 	
 //Utilities ----------------------------------------------------------------------------------------------------------------------------------
 	
