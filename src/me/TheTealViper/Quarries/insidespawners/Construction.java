@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion.insidespawners;
+package me.TheTealViper.Quarries.insidespawners;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,28 +9,28 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
-import me.TheTealViper.viperfusion.PluginFile;
-import me.TheTealViper.viperfusion.ViperFusion;
+import me.TheTealViper.Quarries.PluginFile;
+import me.TheTealViper.Quarries.Quarries;
 
 public class Construction {
 	public static Map<Location, Construction> DATABASE = new HashMap<Location, Construction>();
-	public static PluginFile PLUGINFILE = new PluginFile(ViperFusion.plugin, "data/constructions");
+	public static PluginFile PLUGINFILE = new PluginFile(Quarries.plugin, "data/constructions");
 	public static void onEnable() {
 		if(PLUGINFILE.contains("locs")) {
 			ConfigurationSection sec = PLUGINFILE.getConfigurationSection("locs");
 			if(sec != null && sec.getKeys(false) != null) {
 				for(String s : PLUGINFILE.getConfigurationSection("locs").getKeys(false)) {
-					new Construction(ViperFusion.parseLoc(s), false);
+					new Construction(Quarries.parseLoc(s), false);
 				}
 			}
 		}
 		
-		ViperFusion.plugin.getServer().getPluginManager().registerEvents(new Construction_Events(), ViperFusion.plugin);
+		Quarries.plugin.getServer().getPluginManager().registerEvents(new Construction_Events(), Quarries.plugin);
 	}
 	public static void onDisable() {
 		List<String> stringList = new ArrayList<String>();
 		for(Construction i : DATABASE.values()) {
-			stringList.add(ViperFusion.locToString(i.loc));
+			stringList.add(Quarries.locToString(i.loc));
 		}
 		PLUGINFILE.set("locs", stringList);
 		PLUGINFILE.save();
@@ -46,7 +46,7 @@ public class Construction {
 		DATABASE.put(loc, this);
 		
 		if(generateNew)
-			ViperFusion.createInsideSpawner(loc.getBlock(), ViperFusion.TEXID_CONSTRUCTION);
+			Quarries.createInsideSpawner(loc.getBlock(), Quarries.TEXID_CONSTRUCTION);
 	}
 	
 	public void breakConstruction() {

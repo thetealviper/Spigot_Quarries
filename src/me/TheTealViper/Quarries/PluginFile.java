@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion;
+package me.TheTealViper.Quarries;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class PluginFile extends YamlConfiguration {
                
             } catch (IOException exception) {
                 exception.printStackTrace();
-                Bukkit.getServer().getConsoleSender().sendMessage(ViperFusion.LOG_PREFIX + "Error while creating file " + file.getName());
+                Bukkit.getServer().getConsoleSender().sendMessage(Quarries.LOG_PREFIX + "Error while creating file " + file.getName());
             }
            
         }
@@ -72,11 +72,11 @@ public class PluginFile extends YamlConfiguration {
        
         } catch (IOException exception) {
             exception.printStackTrace();
-            Bukkit.getServer().getConsoleSender().sendMessage(ViperFusion.LOG_PREFIX + "Error while loading file " + file.getName());
+            Bukkit.getServer().getConsoleSender().sendMessage(Quarries.LOG_PREFIX + "Error while loading file " + file.getName());
            
         } catch (InvalidConfigurationException exception) {
             exception.printStackTrace();
-            Bukkit.getServer().getConsoleSender().sendMessage(ViperFusion.LOG_PREFIX + "Error while loading file " + file.getName());
+            Bukkit.getServer().getConsoleSender().sendMessage(Quarries.LOG_PREFIX + "Error while loading file " + file.getName());
            
         }
        
@@ -93,7 +93,7 @@ public class PluginFile extends YamlConfiguration {
            
         } catch (IOException exception) {
             exception.printStackTrace();
-            Bukkit.getServer().getConsoleSender().sendMessage(ViperFusion.LOG_PREFIX + "Error while saving file " + file.getName());
+            Bukkit.getServer().getConsoleSender().sendMessage(Quarries.LOG_PREFIX + "Error while saving file " + file.getName());
         }
        
     }

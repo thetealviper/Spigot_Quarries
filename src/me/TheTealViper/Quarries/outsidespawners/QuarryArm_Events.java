@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion.outsidespawners;
+package me.TheTealViper.Quarries.outsidespawners;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion.insidespawners;
+package me.TheTealViper.Quarries.insidespawners;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,30 +10,30 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 
-import me.TheTealViper.viperfusion.PluginFile;
-import me.TheTealViper.viperfusion.ViperFusion;
-import me.TheTealViper.viperfusion.outsidespawners.Marker;
-import me.TheTealViper.viperfusion.systems.QuarrySystem;
+import me.TheTealViper.Quarries.PluginFile;
+import me.TheTealViper.Quarries.Quarries;
+import me.TheTealViper.Quarries.systems.QuarrySystem;
+import me.TheTealViper.Quarries.outsidespawners.Marker;
 
 public class Quarry {
 	public static Map<Location, Quarry> DATABASE = new HashMap<Location, Quarry>();
-	public static PluginFile PLUGINFILE = new PluginFile(ViperFusion.plugin, "data/quarrys");
+	public static PluginFile PLUGINFILE = new PluginFile(Quarries.plugin, "data/quarrys");
 	public static void onEnable() {
 		if(PLUGINFILE.contains("locs")) {
 			ConfigurationSection sec = PLUGINFILE.getConfigurationSection("locs");
 			if(sec != null && sec.getKeys(false) != null) {
 				for(String s : PLUGINFILE.getConfigurationSection("locs").getKeys(false)) {
-					new Quarry(ViperFusion.parseLoc(s), null, false);
+					new Quarry(Quarries.parseLoc(s), null, false);
 				}
 			}
 		}
 
-		ViperFusion.plugin.getServer().getPluginManager().registerEvents(new Quarry_Events(), ViperFusion.plugin);
+		Quarries.plugin.getServer().getPluginManager().registerEvents(new Quarry_Events(), Quarries.plugin);
 	}
 	public static void onDisable() {
 		List<String> stringList = new ArrayList<String>();
 		for(Quarry i : DATABASE.values()) {
-			stringList.add(ViperFusion.locToString(i.loc));
+			stringList.add(Quarries.locToString(i.loc));
 		}
 		PLUGINFILE.set("locs", stringList);
 		PLUGINFILE.save();
@@ -49,7 +49,7 @@ public class Quarry {
 		DATABASE.put(loc, this);
 		
 		if(generateNew) {
-			ViperFusion.createInsideSpawner(loc.getBlock(), Integer.parseInt(String.valueOf(ViperFusion.TEXID_QUARRY) + ViperFusion.facingToAddedInt(face)));
+			Quarries.createInsideSpawner(loc.getBlock(), Integer.parseInt(String.valueOf(Quarries.TEXID_QUARRY) + Quarries.facingToAddedInt(face)));
 			
 			if(Marker.DATABASE.containsKey(loc.getBlock().getRelative(BlockFace.NORTH).getLocation()))
 				QuarrySystem.initCreateQuarrySystem(loc.getBlock(), loc.getBlock().getRelative(BlockFace.NORTH), BlockFace.NORTH);

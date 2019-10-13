@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion.systems;
+package me.TheTealViper.Quarries.systems;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,16 +16,16 @@ import org.bukkit.block.Container;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import me.TheTealViper.viperfusion.PluginFile;
-import me.TheTealViper.viperfusion.ViperFusion;
-import me.TheTealViper.viperfusion.insidespawners.Construction;
-import me.TheTealViper.viperfusion.outsidespawners.Marker;
-import me.TheTealViper.viperfusion.outsidespawners.QuarryArm;
+import me.TheTealViper.Quarries.insidespawners.Construction;
+import me.TheTealViper.Quarries.outsidespawners.Marker;
+import me.TheTealViper.Quarries.outsidespawners.QuarryArm;
+import me.TheTealViper.Quarries.PluginFile;
+import me.TheTealViper.Quarries.Quarries;
 
 public class QuarrySystem {
 	public static Map<Location, QuarrySystem> DATABASE = new HashMap<Location, QuarrySystem>();
 	public static void onEnable() {
-		File quarrySystemFolder = new File(ViperFusion.plugin.getDataFolder(), "data/systems/quarrysystem/");
+		File quarrySystemFolder = new File(Quarries.plugin.getDataFolder(), "data/systems/quarrysystem/");
 		if(quarrySystemFolder != null && quarrySystemFolder.listFiles() != null) {
 			for(File f : quarrySystemFolder.listFiles()) {
 				QuarrySystem QS = QuarrySystem.load(f.getName());
@@ -33,16 +33,16 @@ public class QuarrySystem {
 			}
 		}
 		
-		ViperFusion.plugin.getServer().getPluginManager().registerEvents(new QuarrySystem_Events(), ViperFusion.plugin);
+		Quarries.plugin.getServer().getPluginManager().registerEvents(new QuarrySystem_Events(), Quarries.plugin);
 	}
 	public static void onDisable() {
 		for(QuarrySystem qs : DATABASE.values()) {
-			PluginFile pf = new PluginFile(ViperFusion.plugin, "data/systems/quarrysystem/" + ViperFusion.locToString(qs.quarryBlock.getLocation()));
-			pf.set("max", ViperFusion.locToString(qs.max));
-			pf.set("min", ViperFusion.locToString(qs.min));
+			PluginFile pf = new PluginFile(Quarries.plugin, "data/systems/quarrysystem/" + Quarries.locToString(qs.quarryBlock.getLocation()));
+			pf.set("max", Quarries.locToString(qs.max));
+			pf.set("min", Quarries.locToString(qs.min));
 			pf.set("powered", qs.powered);
 			pf.set("type", qs.type.toString());
-			pf.set("miningArmShift", ViperFusion.locToString(qs.miningArmShift.toLocation(qs.quarryBlock.getWorld())));
+			pf.set("miningArmShift", Quarries.locToString(qs.miningArmShift.toLocation(qs.quarryBlock.getWorld())));
 			pf.set("hitBedrock", qs.hitBedrock);
 			pf.set("mineDelay", qs.mineDelay);
 			pf.save();
@@ -75,14 +75,14 @@ public class QuarrySystem {
 		this.hitBedrock = hitBedrock;
 		this.mineDelay = mineDelay;
 		
-		File file = new File(ViperFusion.plugin.getDataFolder(), "/data/systems/quarrysystem/" + ViperFusion.locToString(quarryBlock.getLocation()));
+		File file = new File(Quarries.plugin.getDataFolder(), "/data/systems/quarrysystem/" + Quarries.locToString(quarryBlock.getLocation()));
 		if(!file.exists()) {
-			PluginFile pf = new PluginFile(ViperFusion.plugin, "data/systems/quarrysystem/" + ViperFusion.locToString(quarryBlock.getLocation()));
-			pf.set("max", ViperFusion.locToString(max));
-			pf.set("min", ViperFusion.locToString(min));
+			PluginFile pf = new PluginFile(Quarries.plugin, "data/systems/quarrysystem/" + Quarries.locToString(quarryBlock.getLocation()));
+			pf.set("max", Quarries.locToString(max));
+			pf.set("min", Quarries.locToString(min));
 			pf.set("powered", powered);
 			pf.set("type", type.toString());
-			pf.set("miningArmShift", ViperFusion.locToString(new Location(max.getWorld(), 0, 0, 0)));
+			pf.set("miningArmShift", Quarries.locToString(new Location(max.getWorld(), 0, 0, 0)));
 			pf.set("hitBedrock", false);
 			pf.set("mineDelay", 20);
 			pf.save();
@@ -90,14 +90,14 @@ public class QuarrySystem {
 		
 		final QuarrySystem QS = this;
 		final List<Integer> scheduleInt = new ArrayList<Integer>();
-		scheduleInt.add(Bukkit.getScheduler().scheduleSyncRepeatingTask(ViperFusion.plugin, new Runnable() {public void run() {
+		scheduleInt.add(Bukkit.getScheduler().scheduleSyncRepeatingTask(Quarries.plugin, new Runnable() {public void run() {
 			if(QS.powered && !QS.hitBedrock && DATABASE.containsKey(quarryBlock.getLocation()))
 				mine();
 			else
 				Bukkit.getScheduler().cancelTask(scheduleInt.get(0));
 		}}, 0, QS.mineDelay));
 		final List<Integer> scheduleInt2 = new ArrayList<Integer>();
-		scheduleInt2.add(Bukkit.getScheduler().scheduleSyncRepeatingTask(ViperFusion.plugin, new Runnable() {public void run() {
+		scheduleInt2.add(Bukkit.getScheduler().scheduleSyncRepeatingTask(Quarries.plugin, new Runnable() {public void run() {
 			if(QS.powered && !QS.hitBedrock && DATABASE.containsKey(quarryBlock.getLocation()))
 				breakQuarryArms();
 			else
@@ -108,22 +108,22 @@ public class QuarrySystem {
 	
 	
 	public static QuarrySystem load(Block quarryBlock) {
-		File file = new File(ViperFusion.plugin.getDataFolder(), "/data/systems/quarrysystem/" + ViperFusion.locToString(quarryBlock.getLocation()));
+		File file = new File(Quarries.plugin.getDataFolder(), "/data/systems/quarrysystem/" + Quarries.locToString(quarryBlock.getLocation()));
 		if(!file.exists())
 			return null;
 		
-		PluginFile pf = new PluginFile(ViperFusion.plugin, "data/systems/quarrysystem/" + ViperFusion.locToString(quarryBlock.getLocation()));
-		Location max = ViperFusion.parseLoc(pf.getString("max"));
-		Location min = ViperFusion.parseLoc(pf.getString("min"));
+		PluginFile pf = new PluginFile(Quarries.plugin, "data/systems/quarrysystem/" + Quarries.locToString(quarryBlock.getLocation()));
+		Location max = Quarries.parseLoc(pf.getString("max"));
+		Location min = Quarries.parseLoc(pf.getString("min"));
 		boolean powered = pf.getBoolean("powered");
 		QuarrySystemType type = QuarrySystemType.valueOf(pf.getString("type"));
-		Location loc = ViperFusion.parseLoc(pf.getString("miningArmShift"));
+		Location loc = Quarries.parseLoc(pf.getString("miningArmShift"));
 		boolean hitBedrock = pf.getBoolean("hitBedrock");
 		int mineDelay = pf.getInt("mineDelay");
 		return new QuarrySystem(quarryBlock, max, min, powered, type, loc.toVector(), hitBedrock, mineDelay);
 	}
 	public static QuarrySystem load(String fileName) {
-		Block quarryBlock = ViperFusion.parseLoc(fileName).getBlock();
+		Block quarryBlock = Quarries.parseLoc(fileName).getBlock();
 		return load(quarryBlock);
 	}
 	
@@ -131,7 +131,7 @@ public class QuarrySystem {
 //		Bukkit.broadcastMessage("checkrange:" + ViperFusion.Marker_Check_Range);
 		List<Location> foundMarkers = new ArrayList<Location>();
 		if(!face.equals(BlockFace.NORTH)) {
-			for(int i = 1;i <= ViperFusion.Marker_Check_Range;i++) {
+			for(int i = 1;i <= Quarries.Marker_Check_Range;i++) {
 				Block tempblock = startingMarker.getRelative(BlockFace.SOUTH, i);
 				if(Marker.DATABASE.containsKey(tempblock.getLocation())) {
 //					Bukkit.broadcastMessage("found!");
@@ -141,7 +141,7 @@ public class QuarrySystem {
 			}
 		}
 		if(!face.equals(BlockFace.EAST)) {
-			for(int i = 1;i <= ViperFusion.Marker_Check_Range;i++) {
+			for(int i = 1;i <= Quarries.Marker_Check_Range;i++) {
 				Block tempblock = startingMarker.getRelative(BlockFace.WEST, i);
 				if(Marker.DATABASE.containsKey(tempblock.getLocation())) {
 //					Bukkit.broadcastMessage("found!");
@@ -151,7 +151,7 @@ public class QuarrySystem {
 			}
 		}
 		if(!face.equals(BlockFace.SOUTH)) {
-			for(int i = 1;i <= ViperFusion.Marker_Check_Range;i++) {
+			for(int i = 1;i <= Quarries.Marker_Check_Range;i++) {
 				Block tempblock = startingMarker.getRelative(BlockFace.NORTH, i);
 				if(Marker.DATABASE.containsKey(tempblock.getLocation())) {
 //					Bukkit.broadcastMessage("found!");
@@ -161,7 +161,7 @@ public class QuarrySystem {
 			}
 		}
 		if(!face.equals(BlockFace.WEST)) {
-			for(int i = 1;i <= ViperFusion.Marker_Check_Range;i++) {
+			for(int i = 1;i <= Quarries.Marker_Check_Range;i++) {
 				Block tempblock = startingMarker.getRelative(BlockFace.EAST, i);
 				if(Marker.DATABASE.containsKey(tempblock.getLocation())) {
 //					Bukkit.broadcastMessage("found!");
@@ -179,7 +179,7 @@ public class QuarrySystem {
 			
 			//Handle construction blocks
 			Block constructionBlock = null;
-			Location[] temp = ViperFusion.getMinMax(foundMarkers.get(0), foundMarkers.get(1).clone().add(0, 3, 0));
+			Location[] temp = Quarries.getMinMax(foundMarkers.get(0), foundMarkers.get(1).clone().add(0, 3, 0));
 			Location min = temp[0];Location max = temp[1];Vector delta = temp[2].toVector();
 			Location[] startingXPoints = new Location[] {min.clone(), min.clone().add(0, delta.getY(), 0), min.clone().add(0, 0, delta.getZ()), min.clone().add(0, delta.getY(), delta.getZ())};
 //			Bukkit.broadcastMessage("made it 1");
@@ -224,7 +224,7 @@ public class QuarrySystem {
 	
 	public void destroy() {
 		//Remove file
-		File file = new File(ViperFusion.plugin.getDataFolder(), "/data/systems/quarrysystem/" + ViperFusion.locToString(quarryBlock.getLocation()));
+		File file = new File(Quarries.plugin.getDataFolder(), "/data/systems/quarrysystem/" + Quarries.locToString(quarryBlock.getLocation()));
 		file.delete();
 		
 		//Break construction blocks

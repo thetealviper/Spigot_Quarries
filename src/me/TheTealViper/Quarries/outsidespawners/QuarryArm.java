@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion.outsidespawners;
+package me.TheTealViper.Quarries.outsidespawners;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,26 +9,26 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 
-import me.TheTealViper.viperfusion.PluginFile;
-import me.TheTealViper.viperfusion.ViperFusion;
+import me.TheTealViper.Quarries.PluginFile;
+import me.TheTealViper.Quarries.Quarries;
 
 public class QuarryArm {
 	
 	public static Map<Location, QuarryArm> DATABASE = new HashMap<Location, QuarryArm>();
-	public static PluginFile PLUGINFILE = new PluginFile(ViperFusion.plugin, "data/quarryarms");
+	public static PluginFile PLUGINFILE = new PluginFile(Quarries.plugin, "data/quarryarms");
 	public static void onEnable() {
 		if(PLUGINFILE.contains("locs")) {
 			for(String s : PLUGINFILE.getConfigurationSection("locs").getKeys(false)) {
-				new QuarryArm(ViperFusion.parseLoc(s), UUID.fromString(PLUGINFILE.getString("locs." + s)), false);
+				new QuarryArm(Quarries.parseLoc(s), UUID.fromString(PLUGINFILE.getString("locs." + s)), false);
 			}
 		}
 		
-		ViperFusion.plugin.getServer().getPluginManager().registerEvents(new QuarryArm_Events(), ViperFusion.plugin);
+		Quarries.plugin.getServer().getPluginManager().registerEvents(new QuarryArm_Events(), Quarries.plugin);
 	}
 	public static void onDisable() {
 		PLUGINFILE.set("locs", null);
 		for(QuarryArm i : DATABASE.values()) {
-			PLUGINFILE.set("locs." + ViperFusion.locToString(i.loc), i.uuid.toString());
+			PLUGINFILE.set("locs." + Quarries.locToString(i.loc), i.uuid.toString());
 		}
 		PLUGINFILE.save();
 	}
@@ -45,7 +45,7 @@ public class QuarryArm {
 		DATABASE.put(loc, this);
 		
 		if(generateNew)
-			this.uuid = ViperFusion.createOutsideSpawner(loc.getBlock(), Material.ACACIA_FENCE, ViperFusion.TEXID_QUARRYARM);
+			this.uuid = Quarries.createOutsideSpawner(loc.getBlock(), Material.ACACIA_FENCE, Quarries.TEXID_QUARRYARM);
 	}
 	
 	public void breakQuarryArm() {

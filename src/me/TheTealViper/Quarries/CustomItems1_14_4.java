@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion;
+package me.TheTealViper.Quarries;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

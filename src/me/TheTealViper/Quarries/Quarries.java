@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion;
+package me.TheTealViper.Quarries;
 
 import java.util.UUID;
 
@@ -15,18 +15,18 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.TheTealViper.viperfusion.insidespawners.Construction;
-import me.TheTealViper.viperfusion.insidespawners.Quarry;
-import me.TheTealViper.viperfusion.outsidespawners.Marker;
-import me.TheTealViper.viperfusion.outsidespawners.QuarryArm;
-import me.TheTealViper.viperfusion.systems.QuarrySystem;
+import me.TheTealViper.Quarries.outsidespawners.Marker;
+import me.TheTealViper.Quarries.insidespawners.Construction;
+import me.TheTealViper.Quarries.insidespawners.Quarry;
+import me.TheTealViper.Quarries.outsidespawners.QuarryArm;
+import me.TheTealViper.Quarries.systems.QuarrySystem;
 import net.minecraft.server.v1_14_R1.BlockPosition;
 import net.minecraft.server.v1_14_R1.NBTTagCompound;
 import net.minecraft.server.v1_14_R1.TileEntityMobSpawner;
 
-public class ViperFusion extends JavaPlugin implements Listener {
+public class Quarries extends JavaPlugin implements Listener {
 	//general
-	public static ViperFusion plugin;
+	public static Quarries plugin;
 	public static String LOG_PREFIX = "[ViperFusion] ";
 	public static VersionType version;
 	
@@ -49,7 +49,7 @@ public class ViperFusion extends JavaPlugin implements Listener {
 		String a = getServer().getClass().getPackage().getName();
 		String version = a.substring(a.lastIndexOf('.') + 1);
 		if(version.equalsIgnoreCase("v1_14_R1")){
-			ViperFusion.version = VersionType.v1_14_R1;
+			Quarries.version = VersionType.v1_14_R1;
 		}
 
 		//Load values from config

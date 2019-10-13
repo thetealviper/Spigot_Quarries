@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion.outsidespawners;
+package me.TheTealViper.Quarries.outsidespawners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
-import me.TheTealViper.viperfusion.VersionType;
-import me.TheTealViper.viperfusion.ViperFusion;
+import me.TheTealViper.Quarries.VersionType;
+import me.TheTealViper.Quarries.Quarries;
 
 public class Marker_Events implements Listener{
 	
@@ -32,9 +32,9 @@ public class Marker_Events implements Listener{
 		
 		ItemStack item = e.getItemInHand();
 		if(item != null && item.hasItemMeta() && item.getItemMeta().hasCustomModelData()) {
-			if(item.getItemMeta().getCustomModelData() == ViperFusion.TEXID_MARKER) {
+			if(item.getItemMeta().getCustomModelData() == Quarries.TEXID_MARKER) {
 //				e.setCancelled(true);
-				if(ViperFusion.version == VersionType.v1_14_R1) {
+				if(Quarries.version == VersionType.v1_14_R1) {
 					Block b = e.getBlockPlaced();
 					new Marker(b.getLocation(), null, true);
 				}

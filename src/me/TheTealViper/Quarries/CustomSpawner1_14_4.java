@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion;
+package me.TheTealViper.Quarries;
 
 import java.util.UUID;
 
@@ -96,7 +96,7 @@ public class CustomSpawner1_14_4 {
 		NBTTagCompound offHand = new NBTTagCompound();
 		handList.add(mainHand);
 		handList.add(offHand);
-		NBTTagCompound helmet = CustomItems1_14_4.getItemNBT(ViperFusion.TEXID_MARKER);
+		NBTTagCompound helmet = CustomItems1_14_4.getItemNBT(Quarries.TEXID_MARKER);
 		NBTTagCompound chestplate = new NBTTagCompound();
 		NBTTagCompound leggings = new NBTTagCompound();
 		NBTTagCompound boots = new NBTTagCompound();

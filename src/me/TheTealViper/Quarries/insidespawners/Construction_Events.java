@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion.insidespawners;
+package me.TheTealViper.Quarries.insidespawners;
 
 import org.bukkit.event.Listener;
 

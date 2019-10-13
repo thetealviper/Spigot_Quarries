@@ -1,4 +1,4 @@
-package me.TheTealViper.viperfusion.systems;
+package me.TheTealViper.Quarries.systems;
 
 public enum QuarrySystemType {
 	Default;
