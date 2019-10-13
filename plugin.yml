@@ -1,0 +1,5 @@
+name: "ViperFusion"
+author: TheTealViper
+version: "1.14.4.a.1"
+api-version: 1.13
+main: me.TheTealViper.viperfusion.ViperFusion
