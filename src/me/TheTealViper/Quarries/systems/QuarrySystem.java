@@ -295,7 +295,8 @@ public class QuarrySystem {
 //			Bukkit.broadcastMessage("hit bedrock");
 			hitBedrock = true;
 		}else {
-			Collection<ItemStack> drops = minedBlock.getDrops();
+			ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE);
+			Collection<ItemStack> drops = minedBlock.getDrops(pickaxe);
 			minedBlock.setType(Material.AIR);
 			for(ItemStack item : drops) {
 				handleMinedItem(item);

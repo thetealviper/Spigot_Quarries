@@ -34,7 +34,8 @@ public class Quarry_Events implements Listener{
 		if(item != null && item.hasItemMeta() && item.getItemMeta().hasCustomModelData()) {
 			if(item.getItemMeta().getCustomModelData() == Quarries.TEXID_QUARRY) {
 //				e.setCancelled(true);
-				if(Quarries.version == VersionType.v1_14_R1) {
+				if(Quarries.version == VersionType.v1_14_R1
+						|| Quarries.version == VersionType.v1_15_R1) {
 					Block b = e.getBlockPlaced();
 					new Quarry(b.getLocation(), Quarries.getFacing(e.getPlayer()), true);
 				}

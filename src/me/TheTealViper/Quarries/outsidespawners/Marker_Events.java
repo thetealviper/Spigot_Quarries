@@ -34,7 +34,8 @@ public class Marker_Events implements Listener{
 		if(item != null && item.hasItemMeta() && item.getItemMeta().hasCustomModelData()) {
 			if(item.getItemMeta().getCustomModelData() == Quarries.TEXID_MARKER) {
 //				e.setCancelled(true);
-				if(Quarries.version == VersionType.v1_14_R1) {
+				if(Quarries.version == VersionType.v1_14_R1
+						|| Quarries.version == VersionType.v1_15_R1) {
 					Block b = e.getBlockPlaced();
 					new Marker(b.getLocation(), null, true);
 				}

@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,14 +14,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.TheTealViper.Quarries.outsidespawners.Marker;
 import me.TheTealViper.Quarries.insidespawners.Construction;
 import me.TheTealViper.Quarries.insidespawners.Quarry;
+import me.TheTealViper.Quarries.outsidespawners.Marker;
 import me.TheTealViper.Quarries.outsidespawners.QuarryArm;
 import me.TheTealViper.Quarries.systems.QuarrySystem;
-import net.minecraft.server.v1_14_R1.BlockPosition;
-import net.minecraft.server.v1_14_R1.NBTTagCompound;
-import net.minecraft.server.v1_14_R1.TileEntityMobSpawner;
 
 public class Quarries extends JavaPlugin implements Listener {
 	//general
@@ -50,6 +46,8 @@ public class Quarries extends JavaPlugin implements Listener {
 		String version = a.substring(a.lastIndexOf('.') + 1);
 		if(version.equalsIgnoreCase("v1_14_R1")){
 			Quarries.version = VersionType.v1_14_R1;
+		}else if(version.equalsIgnoreCase("v1_15_R1")) {
+			Quarries.version = VersionType.v1_15_R1;
 		}
 
 		//Load values from config
@@ -76,7 +74,11 @@ public class Quarries extends JavaPlugin implements Listener {
 	public void onChat(AsyncPlayerChatEvent e) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {public void run() {
 			if(e.getMessage().startsWith("give") && e.getPlayer().hasPermission("quarries.give")) {
-				ItemStack item = CustomItems1_14_4.getItem(Integer.parseInt(e.getMessage().replace("give ", "")));
+				ItemStack item = null;
+				if(version.equals(VersionType.v1_14_R1))
+					item = CustomItems1_14_4.getItem(Integer.parseInt(e.getMessage().replace("give ", "")));
+				else if(version.equals(VersionType.v1_15_R1))
+					item = CustomItems1_15_1.getItem(Integer.parseInt(e.getMessage().replace("give ", "")));
 				e.getPlayer().getInventory().addItem(item);
 			}
 //			else if(e.getMessage().equals("test")) {
@@ -146,10 +148,15 @@ public class Quarries extends JavaPlugin implements Listener {
 	public static void createInsideSpawner(Block b, int textureid) {
 		if(version == VersionType.v1_14_R1)
 			CustomSpawner1_14_4.createInsideSpawner(b, textureid);
+		else if(version == VersionType.v1_15_R1)
+			CustomSpawner1_15_1.createInsideSpawner(b, textureid);
+		
 	}
 	public static UUID createOutsideSpawner(Block b, Material replacementBlock, int textureid) {
 		if(version == VersionType.v1_14_R1)
 			return CustomSpawner1_14_4.createOutsideSpawner(b, replacementBlock, textureid);
+		else if(version == VersionType.v1_15_R1)
+			return CustomSpawner1_15_1.createOutsideSpawner(b, replacementBlock, textureid);
 		else
 			return null;
 	}
